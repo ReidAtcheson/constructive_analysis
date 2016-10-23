@@ -2,7 +2,6 @@ Require Import Coq.QArith.QArith_base.
 Require Import Psatz.
 Require Import Sequence.
 
-
 Definition abs (r:Q) := if (Qlt_le_dec r 0) then -r else r.
 
 
@@ -31,8 +30,15 @@ destruct (Qlt_le_dec (x + -y) 0).
 * apply Qle_refl.
 Qed.
 
-Lemma w_spec2_ex2 : wex1 0 == 0.
+Lemma w_spec2_ex1 : wex1 0 == 0.
 Proof.
+unfold wex1.
+lra.
+Qed.
+
+Lemma w_spec3_ex1 : forall x y, x<=y -> (wex1 x <= wex1 y).
+Proof.
+intros.
 unfold wex1.
 lra.
 Qed.
@@ -41,7 +47,9 @@ Definition ex1 : continuous_function.
 Proof.
 (*eauto using Build_continuous_function, wex1_works.*)
 apply Build_continuous_function with (f:=fex1) (w:=wex1).
-apply w_spec1_ex1 .
+apply w_spec1_ex1.
+apply w_spec2_ex1.
+apply w_spec3_ex1.
 Qed.
 
 
