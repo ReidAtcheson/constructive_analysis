@@ -1,7 +1,9 @@
 Require Import Coq.QArith.QArith_base.
+Require Import Sequence.
 
 
 Definition abs (r:Q) := if (Qlt_le_dec r 0) then -r else r.
+
 
 
 Record continuous_function := {
