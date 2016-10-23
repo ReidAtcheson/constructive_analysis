@@ -1,2 +1,2 @@
 Makefile
-./**/*.aux
+./src/*.aux
