@@ -1,55 +1,46 @@
 Require Import Coq.QArith.QArith_base.
+Require Import Coq.QArith.Qabs.
+Require Import Coq.QArith.Qround.
 Require Import Psatz.
 
 
-Definition abs (r:Q) := if (Qlt_le_dec r 0) then -r else r.
-
-Record convergent_sequence := {
-  (*Sequence is function from nats to rationals*)
-  seq : positive -> Q;
-  (*r is number it converges to*)
-  r : Q;
-  (*a is modulus of convergence*)
-  a : positive -> positive;
-  (*Specification of modulus*)
-  a_spec : forall n, abs ((seq (a n)) + -r) <= 1#n;
-}.
+Definition ConvergentSequence 
+(seq : Q->Q)
+(r:Q)
+(a:Q->Q) 
+:= (forall q, q>0 -> Qabs ((seq (a q)) + -r) <= 1/q).
 
 
-Definition seq_ex1 (n : positive) := 1#n.
-Definition r_ex1 := 0.
-Definition a_ex1 (n : positive) := n.
+(*
+Definition pos2Q (p : positive)
+:= let zp := Zpos p in
+zp#1.
 
-Lemma z_eq_minus_z : -0 == 0.
+Definition Q2pos (q : Q)
+:= Z.to_pos (Qfloor q).
+
+Lemma pos_of_pos_is_pos : 
+forall (n : Z), 
+(Z.lt 0 n) -> Zpos (Z.to_pos n) = n.
 Proof.
-lra.
+apply Z2Pos.id.
 Qed.
 
 
-Lemma a_spec_ex1 : forall n, abs ((seq_ex1 (a_ex1 n)) + -r_ex1) <= 1#n.
+Lemma ints_preserve : forall (n:Z), 
+Z.gt n 0 -> (pos2Q (Q2pos (n#1)))==n#1.
 Proof.
 intros.
-unfold abs, seq_ex1,a_ex1,r_ex1.
-destruct (Qlt_le_dec ((1 # n) + - 0) 0).
-* assert ((1#n) < 0) by lra.
-  assert (R: (1 # n) + - 0 == 1 # n) by lra.
-  rewrite R.
-  assert (~ 1 # n < 0). {
-    apply Qle_not_lt.
-    auto with *.
-  }
-  contradiction.
-* rewrite z_eq_minus_z.
-  lra.
+unfold pos2Q.
+unfold Q2pos.
+unfold Qfloor.
+assert( (Z.div n (Zpos xH) = n) ).
+{
+  auto with *.
+}
+rewrite H0.
+rewrite Z2Pos.id.
+auto with *.
+auto with *.
 Qed.
-
-
-Definition ex1 : convergent_sequence.
-Proof.
-apply Build_convergent_sequence with (seq:=seq_ex1) (r:=r_ex1) (a:=a_ex1).
-apply a_spec_ex1.
-Qed.
-
-
-
-
+*)

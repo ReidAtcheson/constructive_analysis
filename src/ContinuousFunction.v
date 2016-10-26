@@ -1,8 +1,7 @@
 Require Import Coq.QArith.QArith_base.
+Require Import Coq.QArith.Qabs.
 Require Import Psatz.
 Require Import Sequence.
-
-Definition abs (r:Q) := if (Qlt_le_dec r 0) then -r else r.
 
 
 

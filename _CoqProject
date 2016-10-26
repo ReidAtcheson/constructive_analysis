@@ -1,4 +1,5 @@
 -R src ConstructiveAnalysis
+src/Utility.v
 src/Sequence.v
 src/ContinuousFunction.v
 src/PointContinuousFunction.v
