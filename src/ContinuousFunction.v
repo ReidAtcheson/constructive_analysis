@@ -5,6 +5,8 @@ Require Import Sequence.
 
 
 
+Definition ContinuousFunction w wa 
+
 Record continuous_function := {
   f : Q -> Q;
   w : Q -> Q;

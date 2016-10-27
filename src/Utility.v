@@ -9,6 +9,8 @@ Proof.
 lra.
 Qed.
 
+
+
 Lemma r_neq0_pos_or_neg : forall r, (not (r==0)) -> {r>0} + {r<0}.
 Proof.
 intros.

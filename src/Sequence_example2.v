@@ -20,14 +20,6 @@ Definition a_ex1 q := q*b.
 
 
 
-(*
-Theorem Qmult_div_r : 
-forall x y, ~ y == 0 -> y*(x/y) == x.
-*)
-
-(*
-Lemma Qinv_mult_distr : forall p q, / (p * q) == /p * /q.
-*)
 
 Lemma a_spec_ex1 : forall q, q>0 -> Qabs ((seq_ex1 (a_ex1 q)) + -r_ex1) <= 1/q.
 Proof.
@@ -67,10 +59,21 @@ apply Qle_refl.
 Qed.
 
 
-Lemma ex1' : ConvergentSequence seq_ex1 r_ex1 a_ex1.
+Lemma ex1' : ConvergentSequence_def seq_ex1 r_ex1 a_ex1.
 Proof.
-unfold ConvergentSequence.
+unfold ConvergentSequence_def.
 intros.
 apply (a_spec_ex1 q).
 auto.
 Qed.
+
+
+
+Lemma ex1p : ConvergentSequence.
+Proof.
+  apply Build_ConvergentSequence with (Seq := seq_ex1) (Seqr := r_ex1) (Seqa := a_ex1).
+  apply ex1'.
+Qed.
+
+
+
