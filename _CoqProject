@@ -2,3 +2,4 @@
 src/Utility.v
 src/Sequence.v
 src/PointContinuousFunction.v
+src/ContinuousFunction.v

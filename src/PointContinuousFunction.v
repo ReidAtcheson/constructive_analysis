@@ -6,12 +6,9 @@ Require Import Sequence.
 
 
 
-Definition PointContinuousFunction_def f r :=  forall (seq:ConvergentSequence),
+Definition PointContinuousFunction_def (f:Q->Q) (r:Q) :=  forall (seq:ConvergentSequence),
     Seqr seq == r ->
-    exists qseq, forall q,
-        (Seq qseq) q == (f ((Seq seq) q)) /\
-        (Seqr qseq) == (f (Seqr seq)).
-
+    exists qseqa,  ConvergentSequence_def (fun q => f ((Seq seq) q)) (f r) qseqa.
 
 Record PointContinuousFunction :=
   {

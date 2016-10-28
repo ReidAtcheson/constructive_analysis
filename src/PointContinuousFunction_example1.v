@@ -14,31 +14,35 @@ auto.
 Qed.
 
 
-Lemma ex1 :
-  forall seq seqr seqa (Hc: ConvergentSequence seq seqr seqa),
-  PointContinuousFunction Hc fex1 rex1.
+Lemma ex1 : PointContinuousFunction.
 Proof.
+  apply Build_PointContinuousFunction with (PContinf := fex1) (PContinr := rex1).
+  unfold PointContinuousFunction_def.
   intros.
-  unfold PointContinuousFunction.
+
+  remember (fun (q:Q) => q) as qseqa.
+
+
+  exists (Seqa seq).
+
+  unfold ConvergentSequence_def.
+
+
   intros.
-  remember (fun n => fex1 (seq n) ) as qseq.
-  exists qseq.
-  remember (fex1 seqr) as qr.
-  exists qr.
-  remember (fun n => (seqa n)) as qa.
-  exists qa.
-  split.
-  + unfold ConvergentSequence.
-    intros.
-    subst.
-    unfold ConvergentSequence in Hc.
-    unfold fex1.
-    assert( Hcn := Hc q).
-    apply Hcn.
-    apply H0.
-  + split.
-    *subst.
-     lra. 
-    *subst.
-     auto using fex1_works.
-Qed.
+  
+  unfold fex1.
+
+  assert( rex1 == Seqr seq ) by lra.
+
+  rewrite H1.
+
+  assert (H2 := Seq_spec seq).
+
+  unfold ConvergentSequence_def in H2.
+
+  assert (H3 := H2 q).
+  assert (H4 := H3 H0).
+  apply H4.
+
+
+ Qed.
