@@ -246,3 +246,20 @@ rewrite H.
 apply Qeq_refl.
 Qed.
 
+
+Lemma qdivq_eq_1 :
+  forall q, ~q==0 -> q/q==1.
+Proof.
+intros.
+field.
+apply H.
+Qed.
+
+Lemma tiago_lemma :
+forall q0 q, ~ q0==0 -> ~ q==0 ->
+q0 / (q * q0) == 1 / q.
+Proof.
+intros.
+field.
+auto.
+Qed.
